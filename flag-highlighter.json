@@ -1,0 +1,184 @@
+{
+  "description": "Triggers if a flag is detected in an HTTP response",
+  "edition": 2,
+  "graph": {
+    "edges": [
+      {
+        "source": {
+          "exec_alias": "exec",
+          "node_id": 8
+        },
+        "target": {
+          "exec_alias": "exec",
+          "node_id": 10
+        }
+      },
+      {
+        "source": {
+          "exec_alias": "true",
+          "node_id": 10
+        },
+        "target": {
+          "exec_alias": "exec",
+          "node_id": 9
+        }
+      },
+      {
+        "source": {
+          "exec_alias": "false",
+          "node_id": 10
+        },
+        "target": {
+          "exec_alias": "exec",
+          "node_id": 11
+        }
+      },
+      {
+        "source": {
+          "exec_alias": "exec",
+          "node_id": 9
+        },
+        "target": {
+          "exec_alias": "exec",
+          "node_id": 12
+        }
+      },
+      {
+        "source": {
+          "exec_alias": "exec",
+          "node_id": 12
+        },
+        "target": {
+          "exec_alias": "exec",
+          "node_id": 7
+        }
+      }
+    ],
+    "nodes": [
+      {
+        "alias": "passive_end_2",
+        "definition_id": "caido/passive-end",
+        "display": {
+          "x": 510,
+          "y": -100
+        },
+        "id": 7,
+        "name": "Passive End 2",
+        "version": "0.1.0"
+      },
+      {
+        "alias": "on_intercept_response",
+        "definition_id": "caido/on-intercept-response",
+        "display": {
+          "x": -320,
+          "y": -40
+        },
+        "id": 8,
+        "name": "On Intercept Response",
+        "version": "0.1.0"
+      },
+      {
+        "alias": "create_finding",
+        "definition_id": "caido/finding-create",
+        "display": {
+          "x": 70,
+          "y": -60
+        },
+        "id": 9,
+        "inputs": [
+          {
+            "alias": "request",
+            "value": {
+              "data": "$on_intercept_response.request",
+              "kind": "ref"
+            }
+          },
+          {
+            "alias": "title",
+            "value": {
+              "data": "Flag Found",
+              "kind": "string"
+            }
+          }
+        ],
+        "name": "Create Finding",
+        "version": "0.1.0"
+      },
+      {
+        "alias": "matches_httpql",
+        "definition_id": "caido/httpql-matches",
+        "display": {
+          "x": -120,
+          "y": 10
+        },
+        "id": 10,
+        "inputs": [
+          {
+            "alias": "request",
+            "value": {
+              "data": "$on_intercept_response.request",
+              "kind": "ref"
+            }
+          },
+          {
+            "alias": "response",
+            "value": {
+              "data": "$on_intercept_response.response",
+              "kind": "ref"
+            }
+          },
+          {
+            "alias": "query",
+            "value": {
+              "data": "resp.raw.cont:\"bug{\"",
+              "kind": "string"
+            }
+          }
+        ],
+        "name": "Matches HTTPQL",
+        "version": "0.2.0"
+      },
+      {
+        "alias": "passive_end",
+        "definition_id": "caido/passive-end",
+        "display": {
+          "x": 70,
+          "y": 60
+        },
+        "id": 11,
+        "name": "Passive End",
+        "version": "0.1.0"
+      },
+      {
+        "alias": "set_color",
+        "definition_id": "caido/color-set",
+        "display": {
+          "x": 280,
+          "y": -100
+        },
+        "id": 12,
+        "inputs": [
+          {
+            "alias": "color",
+            "value": {
+              "data": "#c23c3c",
+              "kind": "string"
+            }
+          },
+          {
+            "alias": "request",
+            "value": {
+              "data": "$on_intercept_response.request",
+              "kind": "ref"
+            }
+          }
+        ],
+        "name": "Set Color",
+        "version": "0.1.0"
+      }
+    ]
+  },
+  "id": "779183ec-7f0d-446d-b2eb-92eceb71fb44",
+  "kind": "passive",
+  "name": "Bugforge Flag"
+}
