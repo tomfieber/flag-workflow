@@ -130,7 +130,7 @@
           {
             "alias": "query",
             "value": {
-              "data": "resp.raw.cont:\"bug{\"",
+              "data": "resp.raw.regex:/(?:bug|WEBVERSE|CTF|HTB|THM|PLab|flag|picoCTF|RM)\\{\\w+\\}/",
               "kind": "string"
             }
           }
@@ -159,17 +159,17 @@
         "id": 12,
         "inputs": [
           {
-            "alias": "color",
-            "value": {
-              "data": "#c23c3c",
-              "kind": "string"
-            }
-          },
-          {
             "alias": "request",
             "value": {
               "data": "$on_intercept_response.request",
               "kind": "ref"
+            }
+          },
+          {
+            "alias": "color",
+            "value": {
+              "data": "#93d127",
+              "kind": "string"
             }
           }
         ],
@@ -180,5 +180,5 @@
   },
   "id": "779183ec-7f0d-446d-b2eb-92eceb71fb44",
   "kind": "passive",
-  "name": "Bugforge Flag"
+  "name": "Flag Catcher"
 }
